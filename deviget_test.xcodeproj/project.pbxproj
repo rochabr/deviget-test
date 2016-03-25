@@ -16,7 +16,6 @@
 		5B6A7E781CA20B070025982D /* deviget_testTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6A7E771CA20B070025982D /* deviget_testTests.swift */; };
 		5B6A7E831CA20B070025982D /* deviget_testUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6A7E821CA20B070025982D /* deviget_testUITests.swift */; };
 		5B99C5E01CA3885E00F4E9D5 /* TopPostsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B99C5DF1CA3885E00F4E9D5 /* TopPostsViewController.swift */; };
-		5B99C5E21CA3898600F4E9D5 /* RedditAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B99C5E11CA3898600F4E9D5 /* RedditAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +51,6 @@
 		5B6A7E821CA20B070025982D /* deviget_testUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = deviget_testUITests.swift; sourceTree = "<group>"; };
 		5B6A7E841CA20B070025982D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B99C5DF1CA3885E00F4E9D5 /* TopPostsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopPostsViewController.swift; sourceTree = "<group>"; };
-		5B99C5E11CA3898600F4E9D5 /* RedditAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RedditAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +107,6 @@
 				5B6A7E6B1CA20B070025982D /* LaunchScreen.storyboard */,
 				5B6A7E6E1CA20B070025982D /* Info.plist */,
 				5B99C5DF1CA3885E00F4E9D5 /* TopPostsViewController.swift */,
-				5B99C5E11CA3898600F4E9D5 /* RedditAPI.swift */,
 				5B1E3CD91CA479BF0097DA00 /* RedditTableViewCell.swift */,
 				5B1E3CDB1CA4FE250097DA00 /* PostImageViewController.swift */,
 			);
@@ -269,7 +266,6 @@
 				5B1E3CDC1CA4FE250097DA00 /* PostImageViewController.swift in Sources */,
 				5B6A7E631CA20B070025982D /* AppDelegate.swift in Sources */,
 				5B99C5E01CA3885E00F4E9D5 /* TopPostsViewController.swift in Sources */,
-				5B99C5E21CA3898600F4E9D5 /* RedditAPI.swift in Sources */,
 				5B1E3CDA1CA479BF0097DA00 /* RedditTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
