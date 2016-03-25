@@ -11,16 +11,19 @@ import UIKit
 class PostImageViewController: UIViewController {
 
     var imageURLString: String = ""
+    var currentImage: UIImage = UIImage()
+    
     @IBOutlet weak var PostImageView: UIImageView!
     
-    override func viewDidLoad() {
+    override func viewDidLoad() {    
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         let imageURL: NSURL = NSURL(string: imageURLString)!
         let imageData: NSData = NSData(contentsOfURL: imageURL)!
         
-        PostImageView.image = UIImage(data: imageData)!
+        currentImage = UIImage(data: imageData)!
+        PostImageView.image = currentImage
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,7 +31,24 @@ class PostImageViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func saveImageToCameraRoll(sender: AnyObject) {
+        UIImageWriteToSavedPhotosAlbum(currentImage, self,
+            "image:didFinishSavingWithError:contextInfo:", nil)
+    }
+    
+    func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {
+        if error != nil {
+            let alert = UIAlertController(title: "Error", message:"The image wasn't saved, please allow the app to access your camera and album", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+            self.presentViewController(alert, animated: true){}
 
+        }else{
+            let alert = UIAlertController(title: "Image saved!", message:"You can find your image in your camera roll", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+            self.presentViewController(alert, animated: true){}
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -38,5 +58,6 @@ class PostImageViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
 
 }
