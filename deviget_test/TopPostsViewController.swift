@@ -55,6 +55,7 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
                 print("Something went wrong!")
             }
         })
+
         networkTask.resume()
     }
     
@@ -97,7 +98,9 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
             if isPageRefreshing == false {
                 isPageRefreshing = true;
                 pageCount += 25
-                getRedditJSON("https://www.reddit.com/r/all/top.json?count=\(pageCount)&after=\(lastPageId)")
+                
+                self.getRedditJSON("https://www.reddit.com/r/all/top.json?count=\(self.pageCount)&after=\(self.lastPageId)")
+                
             }
         }
     }
