@@ -41,7 +41,7 @@
                                                         <segue destination="v7t-Ge-m4m" kind="show" identifier="ShowThumbnail" id="jc9-et-4pM"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="afgdgdgdfsgsdfgdsfgsdfgsdfgafgdgdgdfsgsdfgdsfgsdfgsdfgafgdgdgdfsgsdfgdsfgsdfgsdfgafgdgdgdfsgsdfgdsfgsdfgsdfg" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJd-hs-foJ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJd-hs-foJ">
                                                     <rect key="frame" x="97" y="0.0" width="495" height="63"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

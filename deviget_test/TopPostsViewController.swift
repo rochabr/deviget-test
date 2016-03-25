@@ -10,8 +10,17 @@ import UIKit
 
 class TopPostsViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var tableData = []
+    var isPageRefreshing = false
+    var pageCount = 0
+    
+    var lastPageId = ""
     var selectedImageURL = ""
+    
+    var tableData = []
+    
+    var thumbnailArray = NSMutableArray()
+    var results = NSMutableArray()
+    
     @IBOutlet weak var redditListTableView: UITableView!
     
     override func viewDidLoad() {
@@ -28,10 +37,19 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
             
             do {
                 theJSON = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as! NSMutableDictionary
-                let results : NSArray = theJSON["data"]!!["children"] as! NSArray
+                
+                //setting last page id, for pagination
+                self.lastPageId = theJSON["data"]!!["after"] as! String
+                
+                let currentResults : NSArray = theJSON["data"]!!["children"] as! NSArray
+                self.results.addObjectsFromArray(currentResults as [AnyObject])
+                
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.tableData = results
+                    self.tableData = self.results
+                    self.populateImageArray(self.results)
                     self.redditListTableView!.reloadData()
+                    
+                    self.isPageRefreshing = false
                 })
             } catch {
                 print("Something went wrong!")
@@ -56,19 +74,11 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         let redditEntry : NSMutableDictionary = self.tableData[indexPath.row] as! NSMutableDictionary
         
         cell.titleLabel!.text = redditEntry["data"]!["title"] as? String
-        
         cell.authorLabel!.text = redditEntry["data"]!["author"] as? String
         
         //setting the thumbnail
-        let imageString : String = redditEntry["data"]!["thumbnail"] as! String
-        
-        if !imageString.isEmpty {
-            let imageURL: NSURL = NSURL(string: imageString)!
-            let imageData: NSData = NSData(contentsOfURL: imageURL)!
-            
-            cell.thumbButton!.setBackgroundImage(UIImage(data: imageData)!,forState:UIControlState.Normal)
-            cell.thumbButton.tag = indexPath.row
-        }
+        cell.thumbButton!.setBackgroundImage(thumbnailArray.objectAtIndex(indexPath.row) as? UIImage,forState:UIControlState.Normal)
+        cell.thumbButton.tag = indexPath.row
         
         //get numbers of hours since the post
         let createdDateInMilliseconds: NSTimeInterval = (redditEntry["data"]!["created_utc"] as! Double)
@@ -82,8 +92,42 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         return cell
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row + 1 == tableData.count{
+            if isPageRefreshing == false {
+                isPageRefreshing = true;
+                pageCount += 25
+                getRedditJSON("https://www.reddit.com/r/all/top.json?count=\(pageCount)&after=\(lastPageId)")
+            }
+        }
+    }
+    
     func hoursFrom(date:NSDate) -> Int{
         return NSCalendar.currentCalendar().components(.Hour, fromDate: date, toDate: NSDate(), options: []).hour
+    }
+    
+    //function to prepopulate an array with thumbnails, making the request quicker and handling possible reusable cell issues
+    func populateImageArray(array: NSArray) {
+        var i = 0
+        for entry in array{
+            let redditEntry : NSMutableDictionary = entry as! NSMutableDictionary
+            
+            //setting the thumbnail
+            let imageString : String = redditEntry["data"]!["thumbnail"] as! String
+            if !imageString.isEmpty{
+                do {
+                    let imageURL: NSURL = NSURL(string: imageString)!
+                    let imageData: NSData = try NSData(contentsOfURL: imageURL, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                    thumbnailArray.insertObject(UIImage(data: imageData)!, atIndex: i)
+                }catch {
+                    thumbnailArray.insertObject(UIImage(named: "No_Image")!, atIndex: i)
+                }
+            }else{
+                thumbnailArray.insertObject(UIImage(named: "No_Image")!, atIndex: i)
+            }
+
+            i += 1
+        }
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
@@ -92,11 +136,13 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         if identifier == "ShowThumbnail"{
             let thumbnailIndex = sender!.tag
             
+            //checking if the post contains images
             let redditEntry : NSMutableDictionary = self.tableData[thumbnailIndex] as! NSMutableDictionary
-            selectedImageURL = redditEntry["data"]?["preview"]??["images"]??[0]["source"]??["url"] as! String
-            
-            if !selectedImageURL.isEmpty{
-                return true
+            if redditEntry["data"]?["preview"]??["images"]??[0]["source"]??["url"] != nil{
+                selectedImageURL = redditEntry["data"]?["preview"]??["images"]??[0]["source"]??["url"] as! String
+                if !selectedImageURL.isEmpty{
+                    return true
+                }
             }
         }
         
@@ -107,7 +153,6 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         if segue.identifier == "ShowThumbnail"{
             let vc = segue.destinationViewController as! PostImageViewController
             vc.imageURLString = selectedImageURL
-            
         }
     }
 }
