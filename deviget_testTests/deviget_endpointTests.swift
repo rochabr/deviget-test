@@ -9,7 +9,7 @@
 import XCTest
 @testable import deviget_test
 
-class deviget_testTests: XCTestCase {
+class deviget_endpointTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -21,9 +21,11 @@ class deviget_testTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testEndpointCreation() {
         // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        XCTAssertTrue(Endpoint.TopPosts.url() == "https://www.reddit.com/r/all/top.json")
+        XCTAssertTrue(Endpoint.TopPostsPagination(2, "PageId").url() == "https://www.reddit.com/r/all/top.json?count=2&after=PageId")
     }
     
     func testPerformanceExample() {

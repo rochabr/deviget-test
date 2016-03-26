@@ -26,12 +26,12 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        getRedditJSON("https://www.reddit.com/r/all/top.json")
+        getRedditJSON(Endpoint.TopPosts.url())
     }
     
     func getRedditJSON(redditURL : String){
         let mySession = NSURLSession.sharedSession()
-        let url: NSURL = NSURL(string: redditURL)!
+        let url = NSURL(string: redditURL)!
         let networkTask = mySession.dataTaskWithURL(url, completionHandler : {data, response, error -> Void in
             var theJSON: AnyObject
             
@@ -43,16 +43,18 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
                 
                 let currentResults : NSArray = theJSON["data"]!!["children"] as! NSArray
                 self.results.addObjectsFromArray(currentResults as [AnyObject])
-                
+                self.populateImageArray(self.results)
+
                 dispatch_async(dispatch_get_main_queue(), {
                     self.tableData = self.results
-                    self.populateImageArray(self.results)
                     self.redditListTableView!.reloadData()
                     
                     self.isPageRefreshing = false
                 })
             } catch {
-                print("Something went wrong!")
+                let alert = UIAlertController(title: "Error", message:"Server error", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default) { _ in })
+                self.presentViewController(alert, animated: true){}
             }
         })
 
@@ -99,8 +101,7 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
                 isPageRefreshing = true;
                 pageCount += 25
                 
-                self.getRedditJSON("https://www.reddit.com/r/all/top.json?count=\(self.pageCount)&after=\(self.lastPageId)")
-                
+                self.getRedditJSON(Endpoint.TopPostsPagination(pageCount, lastPageId).url())
             }
         }
     }
