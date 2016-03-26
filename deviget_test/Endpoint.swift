@@ -20,8 +20,8 @@ enum Endpoint {
         switch self {
         case .TopPosts:
             return baseURL.stringByAppendingString("r/all/top.json")
-        case .TopPostsPagination(let pageCount, let lastPageId):
-            return baseURL.stringByAppendingString("r/all/top.json?count=\(pageCount)&after=\(lastPageId)")
+        case .TopPostsPagination(let count, let lastPageId):
+            return baseURL.stringByAppendingString("r/all/top.json?count=\(count)&after=\(lastPageId)")
         }
     }
 }

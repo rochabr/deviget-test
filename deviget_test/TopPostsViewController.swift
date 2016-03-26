@@ -11,7 +11,7 @@ import UIKit
 class TopPostsViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var isPageRefreshing = false
-    var pageCount = 0
+    var count = 0
     
     var lastPageId = ""
     var selectedImageURL = ""
@@ -25,10 +25,11 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        //Call endpoint for the first time, capturing the first 25 posts
         getRedditJSON(Endpoint.TopPosts.url())
     }
     
+    //gets response from Reddit's API and populates tableview with the parsed data
     func getRedditJSON(redditURL : String){
         let mySession = NSURLSession.sharedSession()
         let url = NSURL(string: redditURL)!
@@ -41,6 +42,7 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
                 //setting last page id, for pagination
                 self.lastPageId = theJSON["data"]!!["after"] as! String
                 
+                //get post information and populates tableview
                 let currentResults : NSArray = theJSON["data"]!!["children"] as! NSArray
                 self.results.addObjectsFromArray(currentResults as [AnyObject])
                 self.populateImageArray(self.results)
@@ -70,6 +72,8 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         return tableData.count
     }
     
+    
+    //populates the tableview cells
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "RedditTableViewCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! RedditTableViewCell
@@ -95,17 +99,20 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         return cell
     }
     
+    //if we reach the end of the tableview, call getRedditJSON, sending the endpoint with the post count and the last post presented
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row + 1 == tableData.count{
             if isPageRefreshing == false {
                 isPageRefreshing = true;
-                pageCount += 25
+                count += 25
                 
-                self.getRedditJSON(Endpoint.TopPostsPagination(pageCount, lastPageId).url())
+                self.getRedditJSON(Endpoint.TopPostsPagination(count, lastPageId).url())
             }
         }
     }
     
+    
+    //gets the number of hours since the post was created
     func hoursFrom(date:NSDate) -> Int{
         return NSCalendar.currentCalendar().components(.Hour, fromDate: date, toDate: NSDate(), options: []).hour
     }
@@ -134,13 +141,11 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         }
     }
     
+    //checking if the post contains images so we can open the view controller
     override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
-        
-        //checking if the image exists so we can open the view controller
         if identifier == "ShowThumbnail"{
             let thumbnailIndex = sender!.tag
             
-            //checking if the post contains images
             let redditEntry : NSMutableDictionary = self.tableData[thumbnailIndex] as! NSMutableDictionary
             if redditEntry["data"]?["preview"]??["images"]??[0]["source"]??["url"] != nil{
                 selectedImageURL = redditEntry["data"]?["preview"]??["images"]??[0]["source"]??["url"] as! String
@@ -153,6 +158,7 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         return false
     }
     
+    //sends the selected image instance to the view controller
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowThumbnail"{
             let vc = segue.destinationViewController as! PostImageViewController
