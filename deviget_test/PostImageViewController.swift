@@ -33,7 +33,7 @@ class PostImageViewController: UIViewController {
     
     @IBAction func saveImageToCameraRoll(sender: AnyObject) {
         UIImageWriteToSavedPhotosAlbum(currentImage, self,
-            "image:didFinishSavingWithError:contextInfo:", nil)
+            #selector(PostImageViewController.image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     func image(image: UIImage, didFinishSavingWithError error: NSErrorPointer, contextInfo:UnsafePointer<Void>) {

@@ -29,9 +29,9 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
         getRedditJSON("https://www.reddit.com/r/all/top.json")
     }
     
-    func getRedditJSON(whichReddit : String){
+    func getRedditJSON(redditURL : String){
         let mySession = NSURLSession.sharedSession()
-        let url: NSURL = NSURL(string: whichReddit)!
+        let url: NSURL = NSURL(string: redditURL)!
         let networkTask = mySession.dataTaskWithURL(url, completionHandler : {data, response, error -> Void in
             var theJSON: AnyObject
             
