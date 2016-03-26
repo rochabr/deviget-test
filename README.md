@@ -22,7 +22,7 @@ In addition, for those having a picture (besides the thumbnail) , please allow t
 
 Bonus points will be awarded for (in no particular order):
 
-- Pagination support
+- Pagination support(done)
 - Saving pictures in the picture gallery (done)
-- App state preservation/restoration 
+- App state preservation/restoration (done)
 - Support iPhone 6/ 6+ screen size (hint: size classes) (done)

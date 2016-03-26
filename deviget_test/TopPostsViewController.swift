@@ -10,27 +10,31 @@ import UIKit
 
 class TopPostsViewController : UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    var isPageRefreshing = false
     var count = 0
+    var isPageRefreshing = false
     
     var lastPageId = ""
     var selectedImageURL = ""
     
     var tableData = []
     
-    var thumbnailArray = NSMutableArray()
     var results = NSMutableArray()
+    var thumbnailArray = NSMutableArray()
     
     @IBOutlet weak var redditListTableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //Call endpoint for the first time, capturing the first 25 posts
+        
         getRedditJSON(Endpoint.TopPosts.url())
     }
     
     //gets response from Reddit's API and populates tableview with the parsed data
     func getRedditJSON(redditURL : String){
+        activityIndicator.startAnimating();
+        
         let mySession = NSURLSession.sharedSession()
         let url = NSURL(string: redditURL)!
         let networkTask = mySession.dataTaskWithURL(url, completionHandler : {data, response, error -> Void in
@@ -52,6 +56,7 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
                     self.redditListTableView!.reloadData()
                     
                     self.isPageRefreshing = false
+                    self.activityIndicator.stopAnimating();
                 })
             } catch {
                 let alert = UIAlertController(title: "Error", message:"Server error", preferredStyle: .Alert)

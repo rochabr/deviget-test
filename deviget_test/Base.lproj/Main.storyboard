@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Bxg-be-wbi">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Bxg-be-wbi">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -27,7 +27,7 @@
                                         <rect key="frame" x="0.0" y="92" width="600" height="90"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rDh-Eb-giR" id="zBE-Kh-G0e">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="89"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="90"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aej-qe-a96">
@@ -71,15 +71,24 @@
                                                 <constraint firstAttribute="bottomMargin" secondItem="4dL-9Z-99V" secondAttribute="bottom" constant="-3" id="0Wm-jj-a3L"/>
                                                 <constraint firstItem="Aej-qe-a96" firstAttribute="leading" secondItem="zBE-Kh-G0e" secondAttribute="leading" id="1wa-kI-06V"/>
                                                 <constraint firstItem="fJd-hs-foJ" firstAttribute="leading" secondItem="Aej-qe-a96" secondAttribute="trailing" constant="8" symbolic="YES" id="30G-pF-Iva"/>
+                                                <constraint firstItem="QWt-9K-aKC" firstAttribute="bottom" secondItem="4dL-9Z-99V" secondAttribute="bottom" id="Bc9-tL-0OK"/>
                                                 <constraint firstItem="4dL-9Z-99V" firstAttribute="firstBaseline" secondItem="QWt-9K-aKC" secondAttribute="firstBaseline" constant="1" id="Fyc-jz-YGU"/>
                                                 <constraint firstItem="QWt-9K-aKC" firstAttribute="baseline" secondItem="4dL-9Z-99V" secondAttribute="baseline" constant="2" id="RbX-Dt-ed0"/>
                                                 <constraint firstItem="QWt-9K-aKC" firstAttribute="top" secondItem="fJd-hs-foJ" secondAttribute="bottom" id="Vif-zY-Hpv"/>
                                                 <constraint firstItem="fJd-hs-foJ" firstAttribute="trailing" secondItem="QWt-9K-aKC" secondAttribute="trailing" id="X3f-Jd-8Xa"/>
                                                 <constraint firstItem="fJd-hs-foJ" firstAttribute="trailing" secondItem="zBE-Kh-G0e" secondAttribute="trailingMargin" id="Ybj-59-R6w"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="QWt-9K-aKC" secondAttribute="bottom" constant="-2.5" id="hyM-59-WGq"/>
+                                                <constraint firstItem="QWt-9K-aKC" firstAttribute="top" secondItem="4dL-9Z-99V" secondAttribute="top" id="kES-rE-Rll"/>
                                                 <constraint firstItem="fJd-hs-foJ" firstAttribute="top" secondItem="Aej-qe-a96" secondAttribute="top" id="syy-d4-CvZ"/>
                                                 <constraint firstItem="Aej-qe-a96" firstAttribute="top" secondItem="zBE-Kh-G0e" secondAttribute="top" id="uEc-aw-KdY"/>
                                                 <constraint firstItem="fJd-hs-foJ" firstAttribute="leading" secondItem="4dL-9Z-99V" secondAttribute="leading" id="yaL-QE-1GV"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Fyc-jz-YGU"/>
+                                                    <exclude reference="RbX-Dt-ed0"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="authorLabel" destination="4dL-9Z-99V" id="9TU-dl-seH"/>
@@ -94,17 +103,23 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="aJc-pG-Ahw"/>
                                 </connections>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MWT-RO-09r">
+                                <rect key="frame" x="290" y="572" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="rnR-I6-XOP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1eW-TY-ChP"/>
-                            <constraint firstItem="rnR-I6-XOP" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="HiK-Rg-laA"/>
-                            <constraint firstItem="rnR-I6-XOP" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="XQ3-Jh-egR"/>
-                            <constraint firstAttribute="trailing" secondItem="rnR-I6-XOP" secondAttribute="trailing" id="nhg-WN-9h3"/>
+                            <constraint firstAttribute="trailing" secondItem="rnR-I6-XOP" secondAttribute="trailing" id="3xh-im-GAA"/>
+                            <constraint firstItem="rnR-I6-XOP" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Acy-X9-bmG"/>
+                            <constraint firstItem="rnR-I6-XOP" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="EA2-Ol-Fwx"/>
+                            <constraint firstItem="rnR-I6-XOP" firstAttribute="centerX" secondItem="MWT-RO-09r" secondAttribute="centerX" id="RvU-Gd-OSu"/>
+                            <constraint firstItem="rnR-I6-XOP" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="XM5-Ym-9sg"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="MWT-RO-09r" secondAttribute="bottom" constant="8" symbolic="YES" id="tXs-MO-jDa"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rYf-aY-4yR"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="MWT-RO-09r" id="qgv-9l-Tcp"/>
                         <outlet property="redditListTableView" destination="rnR-I6-XOP" id="k81-fD-gtR"/>
                     </connections>
                 </viewController>
