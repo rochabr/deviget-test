@@ -124,8 +124,7 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
     
     //function to prepopulate an array with thumbnails, making the request quicker and handling possible reusable cell issues
     func populateImageArray(array: NSArray) {
-        var i = 0
-        for entry in array{
+        for (index, entry) in array.enumerate(){
             let redditEntry : NSMutableDictionary = entry as! NSMutableDictionary
             
             //setting the thumbnail
@@ -134,15 +133,14 @@ class TopPostsViewController : UIViewController, UITableViewDataSource, UITableV
                 do {
                     let imageURL: NSURL = NSURL(string: imageString)!
                     let imageData: NSData = try NSData(contentsOfURL: imageURL, options: NSDataReadingOptions.DataReadingMappedIfSafe)
-                    thumbnailArray.insertObject(UIImage(data: imageData)!, atIndex: i)
+                    thumbnailArray.insertObject(UIImage(data: imageData)!, atIndex: index)
                 }catch {
-                    thumbnailArray.insertObject(UIImage(named: "No_Image")!, atIndex: i)
+                    thumbnailArray.insertObject(UIImage(named: "No_Image")!, atIndex: index)
                 }
             }else{
-                thumbnailArray.insertObject(UIImage(named: "No_Image")!, atIndex: i)
+                thumbnailArray.insertObject(UIImage(named: "No_Image")!, atIndex: index)
             }
 
-            i += 1
         }
     }
     
